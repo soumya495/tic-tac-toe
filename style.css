@@ -1,0 +1,162 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --size: 300px;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-grid {
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.box {
+  width: calc(var(--size) * (1 / 3));
+  height: calc(var(--size) * (1 / 3));
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+}
+
+.box:first-child,
+.box:nth-child(2),
+.box:nth-child(3) {
+  border-top: none;
+}
+
+.box:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.box:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.box:last-child,
+.box:nth-child(8),
+.box:nth-child(7) {
+  border-bottom: none;
+}
+
+.box.x,
+.box.circle {
+  cursor: not-allowed;
+}
+
+.box.x::before,
+.box.x::after,
+.box:not(.x, .circle):hover.x-turn::before,
+.box:not(.x, .circle):hover.x-turn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--size) * (1 / 35));
+  height: calc(var(--size) * (1 / 4));
+  background-color: black;
+}
+
+.box.x::before,
+.box.x-turn::before {
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.box.x::after,
+.box.x-turn::after {
+  transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+}
+
+.box.circle::before,
+.box.circle::after,
+.box:not(.circle, .x):hover.circle-turn::before,
+.box:not(.circle, .x):hover.circle-turn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--size) * (1 / 4));
+  height: calc(var(--size) * (1 / 4));
+  border-radius: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: black;
+}
+
+.box:not(.x, .circle):hover.x-turn::before,
+.box:not(.x, .circle):hover.x-turn::after,
+.box:not(.circle, .x):hover.circle-turn::before {
+  background-color: lightgray;
+}
+
+.box.circle::after,
+.box:not(.circle, .x):hover.circle-turn::after {
+  width: calc(var(--size) * (1 / 5));
+  height: calc(var(--size) * (1 / 5));
+  background-color: white;
+}
+
+.game-end-popup {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
+}
+.game-end-popup.active {
+  display: block;
+}
+
+.message-box {
+  position: absolute;
+  width: 50%;
+  max-width: 290px;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 6px 6px 20px -5px #161616;
+}
+
+.message {
+  font-size: 3rem;
+  margin: 1rem 0;
+}
+
+.message-box button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  margin-bottom: 2rem;
+}
+
+.message-box button:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}
